@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+<title>PHI Adopt a Facility</title>
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet/dist/leaflet.css">
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+}
+
+#container{
+display:flex;
+height:650px;
+}
+
+
+#map{
+width:65%;
+height:650px;
+}
+
+
+#panel{
+
+width:35%;
+padding:25px;
+overflow:auto;
+background:white;
+
+}
+
+
+button{
+
+background:#d62828;
+color:white;
+border:none;
+padding:12px;
+border-radius:8px;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div id="container">
+
+
+<div id="map"></div>
+
+
+<div id="panel">
+
+<h2>Adopt a Facility</h2>
+
+<p>
+Click a location on the Philippines map.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+var facilities=[
+
+
+{
+name:"Eversley Childs Sanitarium",
+city:"Cebu",
+lat:10.3157,
+lng:123.8854,
+
+about:"A pediatric facility serving children in Cebu.",
+
+needs:[
+"Gloves",
+"Gauze",
+"Syringes",
+"Pediatric supplies"
+]
+
+},
+
+
+{
+name:"Project Eskwela Partner School",
+city:"Cebu",
+lat:10.30,
+lng:123.88,
+
+about:"A school needing classroom materials.",
+
+needs:[
+"Notebooks",
+"Crayons",
+"Pencils",
+"Backpacks"
+]
+
+}
+
+];
+
+
+
+var map=L.map("map")
+.setView([12.8797,121.774],6);
+
+
+
+L.tileLayer(
+"https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+).addTo(map);
+
+
+
+facilities.forEach(function(f){
+
+
+var marker=L.marker(
+[f.lat,f.lng]
+)
+.addTo(map);
+
+
+
+marker.on(
+"click",
+function(){
+
+
+var list="";
+
+for(
+var i=0;
+i<f.needs.length;
+i++
+){
+
+list += "<li>"+f.needs[i]+"</li>";
+
+}
+
+
+
+document.getElementById("panel").innerHTML=
+
+"<h2>"+f.name+"</h2>"+
+"<b>"+f.city+"</b>"+
+"<h3>About</h3>"+
+"<p>"+f.about+"</p>"+
+"<h3>Needs</h3>"+
+"<ul>"+list+"</ul>"+
+"<button>Sponsor This Facility</button>";
+
+
+
+}
+
+);
+
+
+
+});
+
+
+</script>
+
+
+</body>
+</html>
