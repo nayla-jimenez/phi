@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <meta charset="UTF-8">
 
 <title>PHI Adopt a Facility</title>
 
+
 <link rel="stylesheet"
 href="https://unpkg.com/leaflet/dist/leaflet.css">
+
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
@@ -16,8 +19,9 @@ href="https://unpkg.com/leaflet/dist/leaflet.css">
 
 body{
 margin:0;
-font-family:Arial;
+font-family:Arial,sans-serif;
 }
+
 
 #container{
 display:flex;
@@ -35,24 +39,72 @@ height:650px;
 
 width:35%;
 padding:25px;
-overflow:auto;
 background:white;
+overflow:auto;
 
 }
 
 
-button{
+h2{
+color:#006d77;
+}
 
+
+.sponsor{
+
+display:block;
 background:#d62828;
 color:white;
-border:none;
-padding:12px;
+padding:15px;
+margin-top:25px;
 border-radius:8px;
+text-align:center;
+text-decoration:none;
+font-weight:bold;
+
+}
+
+
+.sponsor:hover{
+
+background:#a51d1d;
+
+}
+
+
+.need{
+
+margin:8px 0;
+
+}
+
+
+@media(max-width:800px){
+
+#container{
+
+flex-direction:column;
+
+}
+
+#map{
+
+width:100%;
+height:400px;
+
+}
+
+#panel{
+
+width:100%;
+
+}
 
 }
 
 
 </style>
+
 
 </head>
 
@@ -71,7 +123,7 @@ border-radius:8px;
 <h2>Adopt a Facility</h2>
 
 <p>
-Click a location on the Philippines map.
+Click a marker on the Philippines map to learn about a facility and sponsor a Balikbayan Box.
 </p>
 
 </div>
@@ -84,97 +136,310 @@ Click a location on the Philippines map.
 <script>
 
 
+// CHANGE THIS TO YOUR WEBADOR PAGE LINK
+var sponsorPage =
+"https://YOUR-WEBADOR-LINK.com/balikbayan-sponsor";
+
+
+
 var facilities=[
 
 
 {
-name:"Eversley Childs Sanitarium",
-city:"Cebu",
+
+name:"Eversley Childs Sanitarium and General Hospital",
+
+city:"Cebu City, Cebu",
+
 lat:10.3157,
+
 lng:123.8854,
 
-about:"A pediatric facility serving children in Cebu.",
+
+about:
+"Eversley Childs Sanitarium serves pediatric patients and families in Cebu. PHI partners with facilities like this to provide essential medical supplies and child-centered resources.",
+
 
 needs:[
-"Gloves",
-"Gauze",
+
+"Medical gloves",
+
+"Gauze and bandages",
+
 "Syringes",
-"Pediatric supplies"
-]
+
+"Pediatric hygiene kits",
+
+"Small toys"
+
+],
+
+
+progress:60
+
 
 },
 
 
-{
-name:"Project Eskwela Partner School",
-city:"Cebu",
-lat:10.30,
-lng:123.88,
 
-about:"A school needing classroom materials.",
+{
+
+name:"Project Eskwela Partner School",
+
+city:"Cebu City, Cebu",
+
+lat:10.3000,
+
+lng:123.8800,
+
+
+about:
+"A public school community where students experience shortages in classroom supplies. PHI provides educational resources to support student learning.",
+
 
 needs:[
+
 "Notebooks",
-"Crayons",
+
 "Pencils",
+
+"Crayons",
+
+"Markers",
+
 "Backpacks"
-]
+
+],
+
+
+progress:40
+
+
+},
+
+
+
+{
+
+name:"Southern Philippines Medical Center",
+
+city:"Davao City, Philippines",
+
+lat:7.1907,
+
+lng:125.4553,
+
+
+about:
+"A regional medical center serving families throughout Mindanao.",
+
+
+needs:[
+
+"Medical supplies",
+
+"Hygiene kits",
+
+"Patient comfort items"
+
+],
+
+
+progress:25
+
 
 }
+
+
 
 ];
 
 
 
+
+
 var map=L.map("map")
-.setView([12.8797,121.774],6);
+.setView([12.8797,121.7740],6);
 
 
 
 L.tileLayer(
-"https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+
+"https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+
+{
+
+attribution:"© OpenStreetMap contributors"
+
+}
+
 ).addTo(map);
+
+
 
 
 
 facilities.forEach(function(f){
 
 
+
 var marker=L.marker(
+
 [f.lat,f.lng]
+
 )
+
 .addTo(map);
 
 
 
+
+
 marker.on(
+
 "click",
+
 function(){
 
 
-var list="";
 
-for(
-var i=0;
-i<f.needs.length;
-i++
-){
+var supplies="";
 
-list += "<li>"+f.needs[i]+"</li>";
+
+
+for(var i=0;i<f.needs.length;i++){
+
+
+supplies +=
+
+"<div class='need'>☐ "
++
+f.needs[i]
++
+"</div>";
+
+
 
 }
 
 
 
-document.getElementById("panel").innerHTML=
 
-"<h2>"+f.name+"</h2>"+
-"<b>"+f.city+"</b>"+
-"<h3>About</h3>"+
-"<p>"+f.about+"</p>"+
-"<h3>Needs</h3>"+
-"<ul>"+list+"</ul>"+
-"<button>Sponsor This Facility</button>";
+// AUTOMATICALLY SEND FACILITY NAME
+
+var sponsorLink =
+
+sponsorPage
+
++
+
+"?facility="
+
++
+
+encodeURIComponent(f.name);
+
+
+
+
+
+
+document.getElementById("panel").innerHTML =
+
+
+"<h2>"
++
+f.name
++
+"</h2>"
+
+
+
++
+
+"<b>"
++
+f.city
++
+"</b>"
+
+
+
++
+
+"<h3>About</h3>"
+
++
+
+"<p>"
++
+f.about
++
+"</p>"
+
+
+
++
+
+"<h3>Needed Supplies</h3>"
+
++
+
+supplies
+
+
+
++
+
+"<h3>Balikbayan Box Progress</h3>"
+
+
+
++
+
+"<div style='background:#ddd;height:20px;border-radius:10px;'>"
+
++
+
+"<div style='background:#006d77;width:"
++
+f.progress
++
+"%;height:20px;color:white;text-align:center;border-radius:10px;'>"
+
++
+
+f.progress
++
+"%"
+
++
+
+"</div></div>"
+
+
+
++
+
+"<a class='sponsor' target='_blank' href='"
+
++
+
+sponsorLink
+
++
+
+"'>"
+
++
+
+"❤️ Sponsor This Facility"
+
++
+
+"</a>";
+
+
 
 
 
@@ -187,8 +452,10 @@ document.getElementById("panel").innerHTML=
 });
 
 
+
 </script>
 
 
 </body>
+
 </html>
