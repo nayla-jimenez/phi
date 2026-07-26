@@ -7,12 +7,8 @@
 
 <title>PHI Adopt a Facility</title>
 
-
-<!-- Sniglet Font -->
 <link href="https://fonts.googleapis.com/css2?family=Sniglet:wght@400;800&display=swap" rel="stylesheet">
 
-
-<!-- Leaflet Map -->
 <link rel="stylesheet"
 href="https://unpkg.com/leaflet/dist/leaflet.css">
 
@@ -21,231 +17,140 @@ href="https://unpkg.com/leaflet/dist/leaflet.css">
 
 <style>
 
-
 body{
-
 margin:0;
-
 font-family:'Sniglet', cursive;
-
 }
 
 
 #container{
-
 display:flex;
-
 height:650px;
-
 }
-
 
 
 #map{
-
 width:65%;
-
 height:650px;
-
 }
-
 
 
 #panel{
-
-
 width:35%;
-
 padding:25px;
-
 background:white;
-
 overflow:auto;
-
 box-sizing:border-box;
-
 }
 
 
-
-h2, h3{
-
+h2,h3{
 font-family:'Sniglet', cursive;
-
 font-weight:800;
-
 color:#006d77;
-
 }
-
 
 
 p{
-
-font-family:Arial, sans-serif;
-
+font-family:Arial,sans-serif;
 font-size:16px;
-
 line-height:1.5;
-
 }
-
 
 
 .need{
-
-font-family:Arial, sans-serif;
-
+font-family:Arial,sans-serif;
 margin:8px 0;
-
 }
-
 
 
 .sponsor{
 
-
 display:block;
-
 background:#d62828;
-
 color:white;
-
 padding:15px;
-
 margin-top:25px;
-
 border-radius:12px;
-
 text-align:center;
-
 text-decoration:none;
-
 font-size:18px;
-
 font-weight:bold;
 
-
 }
-
 
 
 .sponsor:hover{
-
-
 background:#a51d1d;
-
-
 }
-
 
 
 .progress-container{
 
-
 background:#ddd;
-
 height:25px;
-
 border-radius:15px;
-
 overflow:hidden;
 
-
 }
-
 
 
 .progress-bar{
 
-
 background:#006d77;
-
 height:25px;
-
 color:white;
-
 text-align:center;
-
 line-height:25px;
-
 font-family:Arial,sans-serif;
-
 font-size:14px;
 
-
 }
-
 
 
 
 @media(max-width:800px){
 
-
 #container{
-
 flex-direction:column;
-
 height:auto;
-
 }
-
 
 #map{
-
 width:100%;
-
 height:400px;
-
 }
-
 
 #panel{
-
 width:100%;
-
 }
 
-
 }
-
-
 
 </style>
 
-
 </head>
-
 
 
 <body>
 
 
-
 <div id="container">
-
 
 <div id="map"></div>
 
 
-
 <div id="panel">
 
-
 <h2>Adopt a Facility</h2>
-
 
 <p>
 Click a marker on the Philippines map to learn about a partner institution and sponsor their next Balikbayan Box.
 </p>
 
-
 </div>
 
-
 </div>
-
-
 
 
 
@@ -253,29 +158,24 @@ Click a marker on the Philippines map to learn about a partner institution and s
 
 
 // ===================================
-// CHANGE THIS TO YOUR WEBADOR PAGE
+// WEBADOR SPONSOR PAGE
 // ===================================
 
-
-var sponsorPage = 
-"https://YOUR-WEBADOR-LINK.com/balikbayan-sponsor";
+var sponsorPage =
+"https://www.philippinehealthinitiative.org/get-involved/balikbayan-sponsor";
 
 
 
 
 // ===================================
 // FACILITY DATABASE
-// ADD NEW FACILITIES HERE
 // ===================================
-
 
 
 var facilities=[
 
 
-
 {
-
 
 name:"Eversley Childs Sanitarium and General Hospital",
 
@@ -285,12 +185,8 @@ lat:10.3157,
 
 lng:123.8854,
 
-
 about:
-
 "Eversley Childs Sanitarium serves pediatric patients and families in Cebu. PHI partners with facilities like this to provide essential medical supplies and child-centered resources.",
-
-
 
 needs:[
 
@@ -306,34 +202,24 @@ needs:[
 
 ],
 
-
 progress:60
-
 
 },
 
 
 
-
-
 {
-
 
 name:"Project Eskwela Partner School",
 
 city:"Cebu City, Cebu",
 
-
 lat:10.3000,
 
 lng:123.8800,
 
-
 about:
-
 "A public school community where students experience shortages in classroom supplies. PHI provides educational resources to support student learning.",
-
-
 
 needs:[
 
@@ -349,34 +235,24 @@ needs:[
 
 ],
 
-
 progress:40
-
 
 },
 
 
 
-
-
 {
-
 
 name:"Southern Philippines Medical Center",
 
 city:"Davao City, Philippines",
 
-
 lat:7.1907,
 
 lng:125.4553,
 
-
 about:
-
 "A regional medical center serving families throughout Mindanao.",
-
-
 
 needs:[
 
@@ -388,17 +264,12 @@ needs:[
 
 ],
 
-
 progress:25
-
 
 }
 
 
-
 ];
-
-
 
 
 
@@ -408,18 +279,11 @@ progress:25
 // ===================================
 
 
-
-var map = L.map("map")
-
+var map=L.map("map")
 .setView(
-
 [12.8797,121.7740],
-
 6
-
 );
-
-
 
 
 
@@ -428,53 +292,34 @@ L.tileLayer(
 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
 
 {
-
 attribution:"© OpenStreetMap contributors"
-
 }
 
-)
-
-.addTo(map);
-
-
+).addTo(map);
 
 
 
 
 
 // ===================================
-// CREATE FACILITY MARKERS
+// CREATE MARKERS
 // ===================================
-
 
 
 facilities.forEach(function(f){
 
 
-
-var marker = L.marker(
-
+var marker=L.marker(
 [
-
 f.lat,
-
 f.lng
-
 ]
-
-)
-
-.addTo(map);
-
-
+).addTo(map);
 
 
 
 marker.on(
-
 "click",
-
 function(){
 
 
@@ -482,17 +327,7 @@ function(){
 var supplies="";
 
 
-
-for(
-
-var i=0;
-
-i<f.needs.length;
-
-i++
-
-){
-
+for(var i=0;i<f.needs.length;i++){
 
 
 supplies +=
@@ -507,37 +342,13 @@ f.needs[i]
 
 "</div>";
 
-
-
 }
 
 
 
 
 
-// Send facility name to Webador
-
-var sponsorPage = 
-"https://www.philippinehealthinitiative.org/get-involved/balikbayan-sponsor";
-
-sponsorPage
-
-+
-
-"?facility="
-
-+
-
-encodeURIComponent(f.name);
-
-
-
-
-
-
 document.getElementById("panel").innerHTML =
-
-
 
 
 "<h2>"
@@ -549,8 +360,6 @@ f.name
 +
 
 "</h2>"
-
-
 
 
 
@@ -568,13 +377,9 @@ f.city
 
 
 
-
-
 +
 
 "<h3>About</h3>"
-
-
 
 
 
@@ -592,13 +397,9 @@ f.about
 
 
 
-
-
 +
 
 "<h3>Needed Supplies</h3>"
-
-
 
 
 
@@ -608,21 +409,15 @@ supplies
 
 
 
-
-
 +
 
 "<h3>Balikbayan Box Progress</h3>"
 
 
 
-
-
 +
 
 "<div class='progress-container'>"
-
-
 
 
 
@@ -652,13 +447,9 @@ f.progress
 
 
 
-
-
 +
 
 "</div>"
-
-
 
 
 
@@ -668,7 +459,7 @@ f.progress
 
 +
 
-sponsorLink
+sponsorPage
 
 +
 
@@ -684,11 +475,9 @@ sponsorLink
 
 
 
-
 }
 
 );
-
 
 
 });
@@ -698,8 +487,6 @@ sponsorLink
 </script>
 
 
-
 </body>
-
 
 </html>
